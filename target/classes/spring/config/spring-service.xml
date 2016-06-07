@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<import resource="spring-mongo-db.xml" />
+
+	<bean id="traceInterceptor"
+		class="com.spring.mongo.db.interceptors.PerformanceTraceInterceptor" />
+
+	<bean name="methodTraceAutoProxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<!-- define the list of services whose method results that needs to be 
+				traced -->
+			<value>*Repository</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>traceInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="mongoMultiTenancyInterceptor"
+		class="com.spring.mongo.db.interceptors.MongoMultiTenancyInterceptor" />
+
+	<bean name="mongoMultiTenancyAutoProxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<!-- define the list of services whose method results that needs to be 
+				traced -->
+			<value>*Repository</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>mongoMultiTenancyInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+
+</beans>
