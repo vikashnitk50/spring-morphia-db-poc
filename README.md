@@ -12,7 +12,8 @@ Ans: Suppose you are working on webservice or web application.
      2. Write one filter and get the tenant details from the Cache by tenant id.
      
      3. Set the schema name in the filter 
-        for example:     MDC.put(Constants.MONGO_TENANT_DB, "uat");
+        for example:    
+        MDC.put(Constants.MONGO_TENANT_DB, "uat");
         
      4. MongoMultiTenancyInterceptor will get called before any DB operation/orm call.
         String tenantDBName = MDC.get(Constants.MONGO_TENANT_DB);
