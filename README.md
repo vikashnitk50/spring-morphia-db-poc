@@ -30,7 +30,7 @@ Ans: Suppose you are working on webservice or web application.
      7. UserRepository: It will get Datastore object from the factory method and perform any DB operation.
      
      
-     #Mongo DB Bulk API[Performance Testing]-- https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/
+     # Mong DB Bulk API[Performance Testing]-- https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/
      
      public void insertMany(List<User> users) {
 		MongoClient mongoClient=dsFactory.getDS().getMongo();
