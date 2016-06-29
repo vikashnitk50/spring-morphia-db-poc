@@ -28,4 +28,27 @@ Ans: Suppose you are working on webservice or web application.
      6. MultitenantDatastoreFactory.getDS(): Returns the datastore from the Hashmap by database name
      
      7. UserRepository: It will get Datastore object from the factory method and perform any DB operation.
+     
+     
+     # Mongo DB Bulk API[Performance Testing]-- https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/
+     
+     public void insertMany(List<User> users) {
+		MongoClient mongoClient=dsFactory.getDS().getMongo();
+		MongoDatabase database = mongoClient.getDatabase("vikash_mongo");
+        MongoCollection<Document> collection = database.getCollection("users");
+        List<Document>docs=new ArrayList<Document>();
+        for(User user:users){
+        	Document doc=new Document();
+        	doc.put("ic" , user.getIc());
+        	doc.put("name" , user.getName());
+        	doc.put("display_name" , user.getDisplayName());
+        	doc.put("age" , user.getAge());
+        	doc.put("gender" , "MALE");
+        	doc.put("creationDate" , new Date());
+        	doc.put("lastChange" , new Date());
+        	docs.add(doc);
+        }
+        InsertManyOptions options= new InsertManyOptions();
+        collection.insertMany(docs, options.ordered(true));
+	}
  
